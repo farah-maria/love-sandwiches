@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import colorama as colorama
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,16 +22,22 @@ def get_sales_data():
     by commas. The loop will repeatedly request data, until it is valid.
     """
     while True:
-        print("Please enter sales data from the last market.")
-        print("Data should be six numbers, separated by commas.")
+        print("{}Please enter sales data from the last market.".format(
+            colorama.Fore.LIGHTBLUE_EX))
+        print("{}Data should be six numbers, separated by commas.".format(
+            colorama.Fore.YELLOW))
         print("Example: 10,20,30,40,50,60\n")
+        print("{}Enter in order of sandwich type... ".format(
+            colorama.Fore.BLUE))
+        print("{}avoc, tom&moz, hum,	mushrm, lentil hum, salad".format(
+            colorama.Fore.LIGHTYELLOW_EX))
 
-        data_str = input("Enter your data here:\n")
-
+        data_str = input("{}Enter your data here:\n".format(
+            colorama.Fore.LIGHTWHITE_EX))
         sales_data = data_str.split(",")
 
         if validate_data(sales_data):
-            print("Data is valid!")
+            print("{}Data is valid!".format(colorama.Fore.LIGHTWHITE_EX))
             break
 
     return sales_data
@@ -76,7 +83,7 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
@@ -111,15 +118,16 @@ def calculate_stock_data(data):
         int_column = [int(num) for num in column]
         average = sum(int_column) / len(int_column)
         stock_num = average * 1.1
-        new_stock_data.append(round(stock_num))    
+        new_stock_data.append(round(stock_num))
     return new_stock_data
 
 
-def get_stock_values(data):  
-    headings = SHEET.worksheet("stock").row_values(1) 
-    stock_dict = dict(zip(headings, data)) 
-    print("MAKE THE FOLLOWING FOR THE NEXT MARKET: \n")
-    print(stock_dict) 
+def get_stock_values(data):
+    headings = SHEET.worksheet("stock").row_values(1)
+    stock_dict = dict(zip(headings, data))
+    print("{}MAKE THE FOLLOWING FOR THE NEXT MARKET: \n".format(
+        colorama.Fore.CYAN))
+    print(stock_dict)
     return stock_dict
 
 
@@ -135,7 +143,7 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
-    get_stock_values(data)    
+    get_stock_values(data)
 
 
 print("Welcome to Vegan Sandwiches data automation")
