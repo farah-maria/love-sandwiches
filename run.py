@@ -29,7 +29,7 @@ def get_sales_data():
         print("Example: 10,20,30,40,50,60\n")
         print("{}Enter in order of sandwich type... ".format(
             colorama.Fore.BLUE))
-        print("{}avoc, tom&moz, hum,	mushrm, lentil hum, salad".format(
+        print("{}avoc, tom&moz, hum, mushrm, lentil hum, salad".format(
             colorama.Fore.LIGHTYELLOW_EX))
 
         data_str = input("{}Enter your data here:\n".format(
