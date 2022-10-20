@@ -1,7 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import colorama as colorama
-from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -128,7 +127,7 @@ def get_stock_values(data):
     stock_dict = dict(zip(headings, data))
     print("{}MAKE THE FOLLOWING FOR THE NEXT MARKET: \n".format(
         colorama.Fore.CYAN))
-    pprint(stock_dict)
+    print(stock_dict)
     return stock_dict
 
 
